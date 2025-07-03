@@ -1,3 +1,12 @@
+<?php
+$msg = $_GET['msg'] ?? null;
+$erro = $_GET['erro'] ?? null;
+
+if ($msg || $erro) {
+    echo '<script>history.replaceState(null, "", "login.php");</script>';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -11,8 +20,22 @@
 <body>
 
     <div class="container mt-5" style="max-width: 400px;">
+        <?php if ($msg): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= htmlspecialchars($msg) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($erro): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?= htmlspecialchars($erro) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
         <h2 class="mb-4 text-center">Login</h2>
-        <form action="#" method="POST">
+        <form action="processar_login.php" method="POST">
             <div class="mb-3">
                 <label class="form-label">Usuário</label>
                 <input type="text" class="form-control" name="nome" required>
