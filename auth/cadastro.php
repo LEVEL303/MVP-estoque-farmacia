@@ -1,3 +1,11 @@
+<?php
+$erro = $_GET['erro'] ?? null;
+
+if ($erro) {
+    echo '<script>history.replaceState(null, "", "cadastro.php");</script>';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -11,6 +19,13 @@
 <body>
 
     <div class="container mt-5" style="max-width: 400px;">
+        <?php if ($erro): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?= htmlspecialchars($erro) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
         <h2 class="mb-4 text-center">Cadastro de Usuário</h2>
         <form action="processar_cadastro.php" method="POST">
             <div class="mb-3">

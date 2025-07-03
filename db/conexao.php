@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $usuario = 'root';
-$senha = '';
+$senha = 'admin';
 $banco = 'estoque_farmacia';
 
 $conexao = new mysqli($host, $usuario, $senha, $banco);
