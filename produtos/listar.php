@@ -55,58 +55,60 @@ if ($msg || $erro) {
         </div>
     <?php endif; ?>
 
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Cód. Barras</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Grupo</th>
-                <th>Classificação</th>
-                <th>Fabricante</th>
-                <th>Validade</th>
-                <th>Quantidade</th>
-                <th>Controlado</th>
-                <th>Princípio Ativo</th>
-                <th>Registro MS</th>
-                <th>Preço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="tabelaProdutos">
-        <?php while ($p = $produtos->fetch_assoc()): ?>
-            <tr>
-                <td><?= htmlspecialchars($p['cod_barras']) ?></td>
-                <td><?= htmlspecialchars($p['nome']) ?></td>
-                <td><?= htmlspecialchars($p['descricao'] ?? '') ?></td>
-                <td><?= $p['grupo'] ?></td>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Cód. Barras</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Grupo</th>
+                    <th>Classificação</th>
+                    <th>Fabricante</th>
+                    <th>Validade</th>
+                    <th>Quantidade</th>
+                    <th>Controlado</th>
+                    <th>Princípio Ativo</th>
+                    <th>Registro MS</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaProdutos">
+            <?php while ($p = $produtos->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($p['cod_barras']) ?></td>
+                    <td><?= htmlspecialchars($p['nome']) ?></td>
+                    <td><?= htmlspecialchars($p['descricao'] ?? '') ?></td>
+                    <td><?= $p['grupo'] ?></td>
 
-                <td><?= $p['grupo'] === 'medicamento' ? $p['classificacao'] : '—' ?></td>
-                <td><?= htmlspecialchars($p['fabricante']) ?></td>
-                <td><?= date('d/m/Y', strtotime($p['validade'])) ?></td>
-                <td><?= $p['quantidade'] ?></td>
+                    <td><?= $p['grupo'] === 'medicamento' ? $p['classificacao'] : '—' ?></td>
+                    <td><?= htmlspecialchars($p['fabricante']) ?></td>
+                    <td><?= date('d/m/Y', strtotime($p['validade'])) ?></td>
+                    <td><?= $p['quantidade'] ?></td>
 
-                <td><?= $p['grupo'] === 'medicamento' ? ($p['medicamento_controlado'] ? 'Sim' : 'Não') : '—' ?></td>
-                <td><?= $p['grupo'] === 'medicamento' ? htmlspecialchars($p['principio_ativo'] ?? '') : '—' ?></td>
-                <td><?= $p['grupo'] === 'medicamento' ? htmlspecialchars($p['registro_ms'] ?? '') : '—' ?></td>
+                    <td><?= $p['grupo'] === 'medicamento' ? ($p['medicamento_controlado'] ? 'Sim' : 'Não') : '—' ?></td>
+                    <td><?= $p['grupo'] === 'medicamento' ? htmlspecialchars($p['principio_ativo'] ?? '') : '—' ?></td>
+                    <td><?= $p['grupo'] === 'medicamento' ? htmlspecialchars($p['registro_ms'] ?? '') : '—' ?></td>
 
-                <td>R$<?= number_format($p['preco'], 2, ',', '.') ?></td>
+                    <td>R$<?= number_format($p['preco'], 2, ',', '.') ?></td>
 
-                <td>
-                    <div class="d-flex gap-1">
-                        <button class="btn btn-sm btn-danger"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalExcluir"
-                            data-id="<?= $p['id'] ?>"
-                            data-nome="<?= htmlspecialchars($p['nome']) ?>"
-                        >Excluir
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-        </tbody>
-    </table>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <button class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalExcluir"
+                                data-id="<?= $p['id'] ?>"
+                                data-nome="<?= htmlspecialchars($p['nome']) ?>"
+                            >Excluir
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Modal Adicionar -->
     <div class="modal fade" id="modalAdicionar" tabindex="-1" aria-labelledby="modalAdicionarLabel" aria-hidden="true">
