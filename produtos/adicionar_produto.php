@@ -22,6 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $preco = $_POST['preco'] ?? 0;
     $id_usuario = $_SESSION['usuario'];
 
+    $verifica = $conexao->prepare("SELECT id FROM produtos WHERE cod_barras = ? AND id_usuario = ?");
+    $verifica->bind_param('si', $cod_barras, $id_usuario);
+    $verifica->execute();
+    $verifica->store_result();
+
+    if ($verifica->num_rows > 0) {
+        $verifica->close();
+        header('Location: listar.php?erro=Código de barras informado pertence a um produto já cadastrado');
+        exit;
+    }
+    $verifica->close();
+
     $stmt = $conexao->prepare("INSERT INTO produtos (cod_barras, nome, descricao, grupo, classificacao, fabricante, validade, quantidade, medicamento_controlado, principio_ativo, registro_ms, preco, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param('sssssssiissdi', $cod_barras, $nome, $descricao, $grupo, $classificacao, $fabricante, $validade, $quantidade, $medicamento_controlado, $principio_ativo, $registro_ms, $preco, $id_usuario);
 
